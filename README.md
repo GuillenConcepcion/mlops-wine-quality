@@ -114,9 +114,9 @@ flowchart LR
 * **Unificación de Variedades con Flag de Estilo:** Integración de la variable booleana `is_red` en [src/data/loader.py](file:///d:/LabD/Proyecto%20Odysseus/experiments/ds_mlops_Wine_Quality_Classification/src/data/loader.py), permitiendo al modelo aprender diferencias intrínsecas de estructura polifenólica entre estilos.
 * **Transformador Enológico Dominial ([src/features/transformers.py](file:///d:/LabD/Proyecto%20Odysseus/experiments/ds_mlops_Wine_Quality_Classification/src/features/transformers.py)):**  
   Implementación desacoplada de `EnologicalFeatureEngineer` compatible con el estándar `scikit-learn TransformerMixin`:
-  $$\text{acidity\_ratio} = \frac{\text{volatile\_acidity}}{\text{fixed\_acidity} + \epsilon} \quad \text{(Equilibrio entre acidez fresca y defecto acético)}$$
-  $$\text{bound\_so2} = \max\left(0, \; \text{total\_SO2} - \text{free\_SO2}\right), \quad \text{free\_so2\_ratio} = \frac{\text{free\_sulfur\_dioxide}}{\text{total\_sulfur\_dioxide} + \epsilon}$$
-  $$\text{alcohol\_sugar\_ratio} = \frac{\text{alcohol}}{\text{residual\_sugar} + \epsilon} \quad \text{(Balance sensorial entre sequedad y tenor alcohólico)}$$
+  $$\mathrm{AcidityRatio} = \frac{\mathrm{VolatileAcidity}}{\mathrm{FixedAcidity} + \epsilon} \quad \text{(Equilibrio entre acidez fresca y defecto acético)}$$
+  $$\mathrm{BoundSO}_2 = \max\left(0, \; \mathrm{TotalSO}_2 - \mathrm{FreeSO}_2\right), \quad \mathrm{FreeSO}_2\mathrm{Ratio} = \frac{\mathrm{FreeSO}_2}{\mathrm{TotalSO}_2 + \epsilon}$$
+  $$\mathrm{AlcoholSugarRatio} = \frac{\mathrm{Alcohol}}{\mathrm{ResidualSugar} + \epsilon} \quad \text{(Balance sensorial entre sequedad y tenor alcohólico)}$$
 * **Particionamiento y Prevención de Fuga (*Zero-Leakage Protocol*):**  
   - Split estratificado 80/20 con proxy de frecuencias mínimas para clases ultra-escasas, aislando $N=5,197$ muestras de entrenamiento y $N=1,300$ muestras de validación ciega independiente.
   - Ajuste (`fit`) de escaladores (`StandardScaler`) computado estrictamente sobre el subconjunto de entrenamiento y aplicado downstream mediante transformación determinista.

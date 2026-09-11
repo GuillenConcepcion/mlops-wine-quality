@@ -581,6 +581,8 @@ curl -X POST "http://localhost:8000/explain?top_k=3" \
 }
 
 
+## 👨‍💻 Autor y Contacto Profesional
+
 <p align="left">
   <img src="images/guillen.png" alt="Guillén Concepción" width="110" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" />
 </p>

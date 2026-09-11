@@ -583,21 +583,8 @@ curl -X POST "http://localhost:8000/explain?top_k=3" \
 
 ## 👨‍💻 Autor y Contacto Profesional
 
-<table style="border: none; background: transparent;">
-  <tr style="border: none; background: transparent;">
-    <td width="130" valign="middle" align="center" style="border: none;">
-      <img src="images/guillen.png" alt="Guillén Concepción" width="110" style="border-radius: 50%; border: 3px solid #8b0000;" />
-    </td>
-    <td valign="middle" style="border: none;">
-      <strong>Guillén Concepción</strong><br>
-      <em>Senior Data Scientist & MLOps Engineer</em><br>
-      Especialista en diseño, desarrollo y despliegue de soluciones integrales de Inteligencia Artificial Cloud-Native y prácticas avanzadas MLOps (CRISP-DM, Containerización, Tracking y Gobernanza de Modelos).<br><br>
-      🌐 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/guillen-concepcion-25266b127">linkedin.com/in/guillen-concepcion-25266b127</a><br>
-      🐙 <strong>GitHub:</strong> <a href="https://github.com/GuillenConcepcion">github.com/GuillenConcepcion</a><br>
-      📫 <strong>Email:</strong> <a href="mailto:guillenconcepcion@gmail.com">guillenconcepcion@gmail.com</a>
-    </td>
-  </tr>
-</table>
+| <img src="images/guillen.png" alt="Guillén Concepción" width="110" style="border-radius:50%;"> | **Guillén Concepción**<br>*Senior Data Scientist & MLOps Engineer*<br><br>Especialista en diseño, desarrollo y despliegue de soluciones integrales de Inteligencia Artificial Cloud-Native y prácticas avanzadas MLOps (CRISP-DM, Containerización, Tracking y Gobernanza de Modelos).<br><br>🌐 **LinkedIn:** [linkedin.com/in/guillen-concepcion-25266b127](https://www.linkedin.com/in/guillen-concepcion-25266b127)<br>🐙 **GitHub:** [github.com/GuillenConcepcion](https://github.com/GuillenConcepcion)<br>📫 **Email:** [guillenconcepcion@gmail.com](mailto:guillenconcepcion@gmail.com) |
+| :---: | :--- |
 
 ---
 

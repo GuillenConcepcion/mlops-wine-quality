@@ -210,7 +210,8 @@ flowchart TD
   - Los **sulfatos ($\text{SO}_2$)** actúan como preservantes antimicrobianos y antioxidantes indispensables.
 - **Modelado en 3 Etapas:**
   1. *Regresión Lineal Múltiple (OLS):* 4 variables significativas (`alcohol`, `volatile_acidity`, `sulphates`, `total_sulfur_dioxide`).
-  2. *Regularización LASSO ($L_1$):* Selección automática de 6 variables reduciendo colinealidad (VIF): $\min_{\boldsymbol{\beta}} \left\{ \frac{1}{2N} \|\mathbf{y} - \mathbf{X}\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_1 \right\}$.
+  2. *Regularización LASSO ($L_1$):* Selección automática de 6 variables reduciendo colinealidad (VIF):
+     $$\min_{\boldsymbol{\beta}} \left[ \frac{1}{2N} \|\mathbf{y} - \mathbf{X}\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_1 \right]$$
   3. *Random Forest Regressor:* Logra el mejor ajuste empírico ($R^2 \approx 48.5\%$, $\text{RMSE} \approx 0.584$).
 - **El Gran Trade-off:** Nguyen evidencia el conflicto entre **capacidad predictiva pura** (Random Forest) e **interpretabilidad econométrica directa** (coeficientes marginales $\beta$ de OLS/LASSO), donde los modelos lineales eran preferidos por el negocio vitivinícola a costa de perder precisión.
 

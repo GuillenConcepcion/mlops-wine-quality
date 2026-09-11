@@ -320,12 +320,12 @@ flowchart TD
 
 ### 3. Ingeniería de Características Enológicas (`EnologicalFeatureEngineer`)
 Se implementó un transformador personalizado de Scikit-learn que genera variables con alto significado químico:
-1. **`acidity_ratio`:** $\frac{\mathrm{volatile\_acidity}}{\mathrm{fixed\_acidity} + \epsilon}$ (Índice de degradación acética vs frescura tartárica).
-2. **`free_so2_ratio`:** $\frac{\mathrm{free\_sulfur\_dioxide}}{\mathrm{total\_sulfur\_dioxide} + \epsilon}$ (Proporción de protección antioxidante activa).
-3. **`bound_so2`:** $\max(0, \; \mathrm{total\_sulfur\_dioxide} - \mathrm{free\_sulfur\_dioxide})$.
-4. **`total_acidity`:** $\mathrm{fixed\_acidity} + \mathrm{volatile\_acidity} + \mathrm{citric\_acid}$.
-5. **`alcohol_sugar_ratio`:** $\frac{\mathrm{alcohol}}{\mathrm{residual\_sugar} + \epsilon}$ (Balance de fermentación y cuerpo).
-6. **`sulphates_chlorides_ratio`:** $\frac{\mathrm{sulphates}}{\mathrm{chlorides} + \epsilon}$.
+1. **`acidity_ratio`:** $\frac{\mathrm{VolatileAcidity}}{\mathrm{FixedAcidity} + \epsilon}$ (Índice de degradación acética vs frescura tartárica).
+2. **`free_so2_ratio`:** $\frac{\mathrm{FreeSO}_2}{\mathrm{TotalSO}_2 + \epsilon}$ (Proporción de protección antioxidante activa).
+3. **`bound_so2`:** $\max(0, \; \mathrm{TotalSO}_2 - \mathrm{FreeSO}_2)$.
+4. **`total_acidity`:** $\mathrm{FixedAcidity} + \mathrm{VolatileAcidity} + \mathrm{CitricAcid}$.
+5. **`alcohol_sugar_ratio`:** $\frac{\mathrm{Alcohol}}{\mathrm{ResidualSugar} + \epsilon}$ (Balance de fermentación y cuerpo).
+6. **`sulphates_chlorides_ratio`:** $\frac{\mathrm{Sulphates}}{\mathrm{Chlorides} + \epsilon}$.
 
 ---
 

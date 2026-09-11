@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  wine-quality-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: wine_quality_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    volumes:
+      - ../models:/app/models:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - wine_net
+
+  mlflow-tracking-server:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: wine_mlflow_server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    command: mlflow ui --backend-store-uri sqlite:////mlflow/mlflow.db --host 0.0.0.0 --port 5000
+    volumes:
+      - ../mlflow.db:/mlflow/mlflow.db
+      - ../mlruns:/mlflow/mlruns
+    networks:
+      - wine_net
+
+networks:
+  wine_net:
+    driver: bridge

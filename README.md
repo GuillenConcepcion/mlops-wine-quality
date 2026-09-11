@@ -320,12 +320,12 @@ flowchart TD
 
 ### 3. Ingeniería de Características Enológicas (`EnologicalFeatureEngineer`)
 Se implementó un transformador personalizado de Scikit-learn que genera variables con alto significado químico:
-1. **`acidity_ratio`:** $\frac{\text{volatile\_acidity}}{\text{fixed\_acidity} + \epsilon}$ (Índice de degradación acética vs frescura tartárica).
-2. **`free_so2_ratio`:** $\frac{\text{free\_sulfur\_dioxide}}{\text{total\_sulfur\_dioxide} + \epsilon}$ (Proporción de protección antioxidante activa).
-3. **`bound_so2`:** $\max(0, \text{total\_sulfur\_dioxide} - \text{free\_sulfur\_dioxide})$.
-4. **`total_acidity`:** $\text{fixed\_acidity} + \text{volatile\_acidity} + \text{citric\_acid}$.
-5. **`alcohol_sugar_ratio`:** $\frac{\text{alcohol}}{\text{residual\_sugar} + \epsilon}$ (Balance de fermentación y cuerpo).
-6. **`sulphates_chlorides_ratio`:** $\frac{\text{sulphates}}{\text{chlorides} + \epsilon}$.
+1. **`acidity_ratio`:** $\frac{\mathrm{volatile\_acidity}}{\mathrm{fixed\_acidity} + \epsilon}$ (Índice de degradación acética vs frescura tartárica).
+2. **`free_so2_ratio`:** $\frac{\mathrm{free\_sulfur\_dioxide}}{\mathrm{total\_sulfur\_dioxide} + \epsilon}$ (Proporción de protección antioxidante activa).
+3. **`bound_so2`:** $\max(0, \; \mathrm{total\_sulfur\_dioxide} - \mathrm{free\_sulfur\_dioxide})$.
+4. **`total_acidity`:** $\mathrm{fixed\_acidity} + \mathrm{volatile\_acidity} + \mathrm{citric\_acid}$.
+5. **`alcohol_sugar_ratio`:** $\frac{\mathrm{alcohol}}{\mathrm{residual\_sugar} + \epsilon}$ (Balance de fermentación y cuerpo).
+6. **`sulphates_chlorides_ratio`:** $\frac{\mathrm{sulphates}}{\mathrm{chlorides} + \epsilon}$.
 
 ---
 
@@ -579,12 +579,7 @@ curl -X POST "http://localhost:8000/explain?top_k=3" \
   "interpretation": "Prediction of Quality score 7 is primarily driven by: alcohol (positive impact: +0.182), volatile_acidity (positive impact: +0.092), density (positive impact: +0.068)",
   "status": "success"
 }
-```
-<div align="center">
-  <img src="images/guillen.png" alt="Guillén Concepción" width="120" style="border-radius: 50%; border: 3px solid #8b0000; margin-bottom: 8px;" />
-  <p><strong>Lead Architect: Guillén Concepción</strong><br>
-  <em>Senior Data Scientist & MLOps Engineer</em></p>
-</div>
+
 
 ## 👨‍💻 Autor y Contacto Profesional
 

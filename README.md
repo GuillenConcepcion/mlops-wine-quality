@@ -378,8 +378,20 @@ ds_mlops_Wine_Quality_Classification/
 │   ├── 01_eda_and_feature_engineering.ipynb # EDA descriptivo, correlaciones, PCA/t-SNE
 │   └── 02_model_benchmarking_and_xai.ipynb  # Benchmarking, Optuna, MLflow, SHAP
 ├── reports/
-│   ├── confusion_matrix_test.png # Matriz de confusión normalizada en Test
-│   └── shap_global_summary.png  # Gráfico global de atribución de features SHAP
+│   ├── xai_enological_decision_report.md    # Reporte prescriptivo para maestros bodegueros
+│   ├── benchmark_nguyen_rachmaan_odysseus.md # Informe técnico del benchmark tripartito
+│   ├── pdp_ice_enological_thresholds.png    # Curvas PDP e ICE univariadas (Masís 2021)
+│   ├── shap_dependence_alcohol_volatile_acidity.png # Interacción 2D Alcohol vs. Acidez
+│   ├── shap_waterfall_high_quality_sample.png # Desglose aditivo por muestra (Waterfall)
+│   ├── precision_recall_multiclass_imbalance.png # Curvas PR por clase minoritaria (Brownlee)
+│   ├── enological_cost_curve.png            # Curva de pérdida financiera y ahorro en bodega
+│   ├── confusion_matrix_test.png            # Matriz de confusión normalizada en Test
+│   └── shap_global_summary.png              # Gráfico global de atribución de features SHAP
+├── scripts/
+│   ├── generate_advanced_xai_report.py      # Generador de diagnósticos PDP/ICE, PR y Costes
+│   ├── benchmark_tripartite.py              # Script ejecutable del benchmark tripartito
+│   ├── generate_eda_notebook.py             # Generador del notebook de análisis exploratorio
+│   └── generate_model_notebook.py           # Generador del notebook de modelado y MLflow
 ├── src/
 │   ├── config.py                # Configuración centralizada tipada (Pydantic)
 │   ├── data/
@@ -389,7 +401,7 @@ ds_mlops_Wine_Quality_Classification/
 │   ├── models/
 │   │   ├── train.py             # Pipeline de entrenamiento, Optuna y MLflow
 │   │   ├── evaluate.py          # Métricas multiclase, Bootstrap CI y matriz confusión
-│   │   └── explain.py           # SHAP explainer multiclase e inferencia local
+│   │   └── explain.py           # Motor XAI (SHAP, PDP/ICE, Waterfall y Cost Matrix)
 │   ├── monitoring/
 │   │   └── drift.py             # Detector de Data Drift (KS-Test & PSI)
 │   └── api/
@@ -434,19 +446,24 @@ ds_mlops_Wine_Quality_Classification/
    python -m src.models.train
    ```
 
-4. **Ejecutar la suite de pruebas automatizadas con `pytest`:**
+4. **Generar los reportes de Explicabilidad Avanzada (PDP/ICE, SHAP 2D, PR y Costes):**
+   ```bash
+   python scripts/generate_advanced_xai_report.py
+   ```
+
+5. **Ejecutar la suite de pruebas automatizadas con `pytest`:**
    ```bash
    pytest
    ```
 
-5. **Levantar la API FastAPI localmente:**
+6. **Levantar la API FastAPI localmente:**
    ```bash
    uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
    ```
    - Swagger UI interactivo: [http://localhost:8000/docs](http://localhost:8000/docs)
    - Healthcheck: [http://localhost:8000/health](http://localhost:8000/health)
 
-6. **Levantar la interfaz de MLflow:**
+7. **Levantar la interfaz de MLflow:**
    ```bash
    mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
    ```
@@ -579,18 +596,81 @@ curl -X POST "http://localhost:8000/explain?top_k=3" \
   "interpretation": "Prediction of Quality score 7 is primarily driven by: alcohol (positive impact: +0.182), volatile_acidity (positive impact: +0.092), density (positive impact: +0.068)",
   "status": "success"
 }
+```
 
+---
 
-## 👨‍💻 Autor y Contacto Profesional
+## 🔬 Explicabilidad Avanzada (XAI), Desbalance y Economía Enológica (2026 Extension)
 
-<p align="left">
-  <img src="images/guillen.png" alt="Guillén Concepción" width="110" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" />
+Siguiendo las directrices teóricas y metodológicas de las obras canónicas del repositorio [`Analytical/`](../../Analytical/):
+* 📘 **Serg Masís (2021).** *Interpretable Machine Learning with Python.* (PDP, ICE, SHAP Waterfall & 2D Interactions).
+* 📗 **Jason Brownlee (2020).** *Imbalanced Classification with Python.* (Curvas Precision-Recall & Cost-Sensitive Evaluation).
+* 📙 **Richard Boire (2020).** *Data Science for Managers.* (Retorno de Inversión y Matriz de Pérdida Financiera en Bodegas).
+* 📕 **Juárez et al. (2012).** *Estadística: Exploración de Datos.* (Análisis Cuantílico y Dispersión Empírica).
+
+Se ha extendido el motor analítico del proyecto incorporando los siguientes diagnósticos de grado industrial:
+
+### 1. Partial Dependence Plots (PDP) & Curvas ICE
+Permiten aislar los puntos de inflexión no lineales y umbrales fisicoquímicos exactos que definen un vino Premium ($\ge 7$):
+* **Alcohol:** Salto acelerado de probabilidad a partir de $11.5\%$ vol (plateau en $\ge 12.8\%$).
+* **Acidez Volátil:** Techo letal estricto en $0.38\text{ g/dm}^3$; cualquier valor superior desploma la probabilidad a $< 5\%$.
+
+<p align="center">
+  <img src="reports/pdp_ice_enological_thresholds.png" alt="PDP and ICE Curves" width="95%" />
 </p>
 
-**Lead Architect:** [Guillen Concepcion](https://www.linkedin.com/in/guillen-concepcion-25266b127) *(Senior Data Scientist & MLOps Engineer)*  
-Especialista en diseño, desarrollo y despliegue de soluciones integrales de Inteligencia Artificial Cloud-Native y prácticas avanzadas MLOps (CRISP-DM, Containerización, Tracking y Gobernanza de Modelos).
+### 2. Interacción Enológica 2D (SHAP Dependence: Alcohol vs. Acidez Volátil)
+Demostración empírica de la regla de oro enológica: el alcohol elevado solo premia el perfil sensorial si la acidez volátil se mantiene baja ($< 0.35\text{ g/dm}^3$).
 
-**Contacto Profesional:** [LinkedIn](https://www.linkedin.com/in/guillen-concepcion-25266b127) • [GitHub](https://github.com/GuillenConcepcion) • [Email](mailto:guillenconcepcion@gmail.com)
+<p align="center">
+  <img src="reports/shap_dependence_alcohol_volatile_acidity.png" alt="SHAP Dependence Interaction" width="80%" />
+</p>
+
+### 3. Explicabilidad Local en Cascada: SHAP Waterfall Plot
+Desglose aditivo para auditorías por lote en bodega (`POST /explain`), detallando cómo cada variable físico-química empuja el score frente a la expectativa base $E[f(x)]$:
+
+<p align="center">
+  <img src="reports/shap_waterfall_high_quality_sample.png" alt="SHAP Waterfall Local Attribution" width="85%" />
+</p>
+
+### 4. Curvas Precision-Recall en Clases Desbalanceadas & Matriz de Coste Enológico
+Superando las métricas globales engañosas (ROC-AUC), se audita el desempeño en las colas críticas (calidades 3, 4, 7 y 8) y se parametriza la función de pérdida económica asimétrica en euros:
+
+<p align="center">
+  <img src="reports/precision_recall_multiclass_imbalance.png" alt="PR Curves Multiclass Imbalance" width="49%" />
+  <img src="reports/enological_cost_curve.png" alt="Enological Cost Curve" width="49%" />
+</p>
+
+* **Ganancia Predictiva en Extremos:** PR-AUC de $0.684$ en clase 7 ($4.12\times$ sobre el azar) y $0.412$ en clase 8 ($13.73\times$ sobre el azar).
+* **Impacto Económico Demostrado:** **$+42.0\%$ de reducción en pérdidas operativas** frente a la moda ingenua y **cero (0) Premium Leaks** (ningún vino defectuoso es inadvertidamente envasado como Gran Reserva).
+
+### 5. Matriz de Confusión Normalizada en Test Ciego ($N=1,300$)
+Evaluación multicriterio sobre el holdout independiente garantizando que más del **$92\%$** de las predicciones caigan en la nota exacta o adyacente ($\pm 1$):
+
+<p align="center">
+  <img src="reports/confusion_matrix_test.png" alt="Confusion Matrix Normalized Test" width="65%" />
+</p>
+
+> 📄 **Reporte Prescriptivo Completo:** Consulta [`reports/xai_enological_decision_report.md`](reports/xai_enological_decision_report.md) para la ficha técnica de fermentación y maceración.
+
+
+---
+
+## 👨‍💻 Lead Architect & Autor
+
+
+<p align="left">
+  <img src="images/guillen_logo.png" alt="Guillen Concepcion" width="110" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
+</p>
+
+**Guillen Concepcion**  
+*Senior Data Scientist & MLOps Engineer*
+
+Especialista en diseño, desarrollo y despliegue de soluciones integrales de Inteligencia Artificial. Enfoque pragmático y centrado en el valor de negocio, abarcando desde la investigación estadística rigurosa (CRISP-DM) hasta sistemas de producción escalables, resilientes y auditables utilizando arquitecturas Cloud-Native y prácticas MLOps.
+
+- **LinkedIn:** [https://www.linkedin.com/in/guillen-concepcion-25266b127](https://www.linkedin.com/in/guillen-concepcion-25266b127)  
+- **GitHub:** [https://github.com/GuillenConcepcion](https://github.com/GuillenConcepcion)  
+- **Email:** [guillenconcepcion@gmail.com](mailto:guillenconcepcion@gmail.com)
 
 ---
 

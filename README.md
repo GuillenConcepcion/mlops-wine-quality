@@ -658,9 +658,8 @@ Evaluación multicriterio sobre el holdout independiente garantizando que más d
 
 ## 👨‍💻 Lead Architect & Autor
 
-
 <p align="left">
-  <img src="images/guillen_logo.png" alt="Guillen Concepcion" width="110" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
+  <img src="images/guillen.png" alt="Guillen Concepcion" width="110" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
 </p>
 
 **Guillen Concepcion**  
